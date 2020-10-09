@@ -95,6 +95,7 @@ class AssociationsMatcher:
     def __init__(self, word):
         self.word = word
         self.possible_splits = []
+        self.debug = []
         self.generate_possible_splits()
     
     def generate_possible_splits(self):
@@ -110,13 +111,14 @@ class AssociationsMatcher:
         for split_index in range(2, len(self.word)-1):
             first = WordAssociations(self.word[:split_index])
             second = WordAssociations(self.word[split_index:])
-            split_grade = sum([first.grade, second.grade]) * (1/(max(first.grade, second.grade) - min(first.grade, second.grade)))  # TODO: Refactor
+            split_grade = min([first.grade, second.grade]) * (1/(max(first.grade, second.grade) - min(first.grade, second.grade)))  # TODO: Refactor
             self.possible_splits.append(AttrDict({
                 "first": first,
                 "second": second,
                 "grade": split_grade,
             }))
-            
+            # print(split_grade)
+
     @property
     def most_associative(self):
         max_graded_split = self.possible_splits[0]
@@ -127,7 +129,7 @@ class AssociationsMatcher:
     
 words = [
     "misgivings",
-    "gut",   # TODO: Think about this case!
+    "gut",
     "surpass",
     "evolute",
     "obsolete",
@@ -145,8 +147,8 @@ words = [
 for target_word in words:
     match = AssociationsMatcher(target_word).most_associative
     if match.second is None:
-        print(f"{match.first.word}")        
+        print(f"{match.first.word} {match.first.grade} {match.first.associations}")        
     else:
-        print(f"{match.first.word} ({match.first.associations}") 
-        print(f"{match.second.word} ({match.second.associations})")
-        print()
+        print(f"{match.first.word} {match.first.grade} {match.first.associations}") 
+        print(f"{match.second.word} {match.first.grade} {match.second.associations}")
+    print()
