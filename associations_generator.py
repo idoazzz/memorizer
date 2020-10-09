@@ -7,9 +7,9 @@ class Association:
     """Word association representation.
     
     Attributes:
-        name: Word association.
-        score: Similarity score.
-        frequency: How frequent this word in the english language.
+        name (str): Word association.
+        score (str): Similarity score.  # TODO:Change to int
+        frequency (flaot): How frequent this word in the english language.
         
     Notes:
     The value is the number of times the word (or multi-word phrase) occurs per 
@@ -24,32 +24,43 @@ class Association:
         return f"{self.name}: {self.frequency}"
         
 class WordAssociations:
+    """Get word associations from datamuse api.
+    
+    Attributes:
+        word (str): Target word.
+        grade (float): Associations grade. 
+        associations (list): List of associations.
+    """
     API_BASE_URL = "https://api.datamuse.com/words"
 
-    def __init__(self, word):
+    def __init__(self, word, limit=10):
         self.word = word
         self.grade = None
+        self.limit = limit
         self.associations = None
         self.generate_associations()
         
-    def generate_associations(self, limit=10):
+    def generate_associations(self):
+        """Generate associations from datamust api."""
         response = requests.get(f"{self.API_BASE_URL}", params={
             "sl": self.word,  # Sound-like.
             "md": "f"    # Stands for frequency metadata.
         }).json()
         
-        # Create formatted frequency list
+        # Create formatted frequency list.
         self.associations = [
             Association(word=data["word"],
                         frequency=self.extract_frequency(data["tags"]),
                         score=data["score"]) 
             for data in response]
         
-        # Sort by associations frequency
+        # Sort by associations frequency.
         self.associations.sort(key=lambda association: association.frequency,
                                reverse=True)
-        self.associations = self.associations[:limit]
-        self.grade = self.calculate_associations_grade(self.associations[:limit])
+        
+        # Crop.
+        self.associations = self.associations[:self.limit]
+        self.grade = self.calculate_associations_grade(self.associations)
     
     def calculate_associations_grade(self, associations):
         # TODO: Move to weigthed mean
