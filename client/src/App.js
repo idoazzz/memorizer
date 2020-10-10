@@ -3,12 +3,10 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Here will be memorize main input.
-        </p>
-      </header>
+    <div className="app">
+      <div className="app_container">
+        <input placeholder="Memorize a word."/>
+      </div>
     </div>
   );
 }

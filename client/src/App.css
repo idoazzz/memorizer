@@ -1,14 +1,23 @@
-.App {
+.app {
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app_container {
   display: flex;
-  flex-direction: column;
+  min-height: 100vh; /**TODO: ?**/
   align-items: center;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: #282c34;
+}
+
+.app_container input {
+  padding: 10px;
   color: white;
+  background-color: #282c34;
+  font-size: calc(10px + 2vmin); /**TODO: ?**/
+
+  border-style: solid;
+  border: none;
+  border-bottom: 2px solid #3f434b;   
 }
