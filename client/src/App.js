@@ -1,4 +1,5 @@
 import './App.css';
+import axios from 'axios';
 import React from 'react';
 import ResultsBox from './ResultsBox'
 
@@ -7,17 +8,23 @@ class App extends React.Component{
     super(props);
     this.state = {
       word: "",
-      results: {
-        first: [],
-        second: [],
-        grade: 0
-      }
+      results: {}
     };
   }
 
   handleChange = event => {
     this.setState({
       word: event.target.value
+    });
+  }
+  
+  componentDidMount(){
+    axios.get(`http://localhost:3000/${this.state.word}`).
+          then(response => {
+            console.log(response);
+            this.setState({
+              results: response.data
+            });
     });
   }
 
