@@ -1,0 +1,7 @@
+{
+    "editor.minimap.maxColumn": 80,
+    "editor.rulers": [
+        80
+    ],
+    "python.pythonPath": "/home/idoazulay/projects/.virtualenvs/memorize/bin/python3.8"
+}
