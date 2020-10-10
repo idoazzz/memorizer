@@ -17,8 +17,8 @@ class Association:
         Ngrams.
         * Similarity and frequency get normalized.
     """
-    MAX_FREQUENCY =  11000  # "that" word
     MAX_SIMILARITY =  100 
+    MAX_FREQUENCY =  11000  # "that" word
     SIMILARITY_WEIGHT = 0.8
     FREQUENCY_WEIGHT = 1 - SIMILARITY_WEIGHT
     
@@ -44,14 +44,14 @@ class WordAssociations:
         grade (float): All associations grade. 
         associations (list): List of associations.
     """
+    DEFAULT_LIMIT = 10
     API_BASE_URL = "https://api.datamuse.com/words"
     
-    
-    def __init__(self, word, limit=10):
+    def __init__(self, word, limit=DEFAULT_LIMIT):
         self.word = word
         self.grade = None
         self.limit = limit
-        self._associations = None
+        self.associations = None
         self.generate_associations()
         
     def generate_associations(self):
@@ -69,20 +69,18 @@ class WordAssociations:
         response = map(AttrDict, response)
 
         # Create formatted frequency list.
-        self._associations = [Association(word=data.word, score=int(data.score), 
+        self.associations = [Association(word=data.word, score=int(data.score), 
         frequency=self.extract_frequency(data.tags)) for data in response]
         
         # Sort by associations frequency.
-        self._associations.sort(key=lambda association: association.frequency,
+        self.associations.sort(key=lambda association: association.frequency,
                                reverse=True)
 
         # Calculate total associations grade.
         self.grade = self.calculate_associations_grade(self.associations)
-    
-    @property
-    def associations(self):
-        """Get compatible associations."""
-        return self._associations[:self.limit]
+        
+        # Limit associations amount.
+        self.associations = self.associations[:self.limit]
 
     def calculate_associations_grade(self, associations):
         """Calculate a grade for all given associations."""
@@ -92,6 +90,10 @@ class WordAssociations:
     def extract_frequency(frequency):
         """Extract nemeric frequency from Datamuse frequency format."""
         return float(frequency[0][2:])
+
+    @property
+    def syllables_amount(self):
+        return 
     
     def __repr__(self):
         return f"{self.word}: ({self.grade}, {self.associations})"

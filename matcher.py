@@ -1,6 +1,7 @@
 """Match best associations to given word by splitting."""
 from statistics import mean
 from attrdict import AttrDict
+from hyphenate import hyphenate_word
 from associations import WordAssociations
 
 class AssociationsMatcher:
@@ -19,8 +20,8 @@ class AssociationsMatcher:
         self.generate_possible_splits()
     
     def generate_possible_splits(self):
-        # Handle short words (don't split - too short).
-        if len(self.word) <= 3:
+        # Handle short words (don't split - only one syllable).
+        if len(hyphenate_word(self.word)) == 1:
             word_associations = WordAssociations(self.word)
             self.possible_splits.append(AttrDict({
                 "first": word_associations,
