@@ -12,6 +12,7 @@
 }
 
 .app_container input {
+  /**TODO: Change font **/
   padding: 10px;
   color: white;
   background-color: #282c34;
