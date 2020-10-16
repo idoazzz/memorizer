@@ -8,7 +8,7 @@ class ResultsBox extends React.Component{
       return; 
 
     let associations_list = this.props.results.splits[index].associations.map(result => {
-      return <a className="association">{result.name}</a>;
+      return <a className="association" href="#">{result.name}</a>;
     });
     
     return (
