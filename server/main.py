@@ -4,7 +4,7 @@ from matcher import AssociationsMatcher
 app = FastAPI()
 
 @app.get("/{word}")
-def associate_word(word: str):
+async def associate_word(word: str):
     if word == "":
         return {}
     match = AssociationsMatcher(word)
