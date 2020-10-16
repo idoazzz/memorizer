@@ -22,9 +22,11 @@ class ResultsBox extends React.Component{
   }
   
   render(){
+    let loading = this.props.isLoading;
+    let box_class = loading ? "box_container loading" : "box_container";
     if(!this.props.results || 
         Object.keys(this.props.results).length === 0)
-        return <div className="box_container">
+        return <div className={box_class}>
           <a>
               <img src={logo}/>
               <br/>
@@ -33,7 +35,7 @@ class ResultsBox extends React.Component{
         </div>;
 
     return (
-      <div className="box_container">
+      <div className={box_class}>
         {this.get_split_results(0)} 
         {this.get_split_results(1)}
       </div>

@@ -46,7 +46,9 @@ class App extends React.Component{
           </form>
         </div>
         <div className="results_container">
-          <ResultsBox results={this.state.results}></ResultsBox>
+          <ResultsBox results={this.state.results}
+                      isLoading={this.state.isLoading}
+          ></ResultsBox>
         </div>
       </div>
     );

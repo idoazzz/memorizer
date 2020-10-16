@@ -2,14 +2,15 @@
 
 .box_container{
     display: flex;
-    padding: 20px;
     width: inherit;
     height: inherit;
     overflow-y: auto;
+    padding: 30px;
     justify-items: center;
     align-content: center;
     flex-direction: column;
     background-color: $resultsBackgroundColor;
+    border-top: 20px solid $resultsBackgroundColor;
 }
 
 .word_split{
@@ -31,4 +32,22 @@
 .association{
     padding: 5px;
     color: $primaryColor;
+}
+
+.loading{
+    animation: loading_box 1.5s infinite;
+}
+
+@keyframes loading_box{
+    0% {
+        border-color: lightcyan;
+    }
+
+    50% {
+        border-color: yellowgreen;
+    }
+
+    100% {
+        border-color: lightcyan;
+    }
 }
