@@ -24,8 +24,7 @@ class AssociationsMatcher:
         if len(hyphenate_word(self.word)) == 1:
             word_associations = WordAssociations(self.word)
             self.possible_splits.append(AttrDict({
-                "first": word_associations,
-                "second": None,
+                "splits": [word_associations,],
                 "grade": word_associations.grade,
             }))
             return
@@ -39,8 +38,7 @@ class AssociationsMatcher:
             grades_mean = mean([first.grade, second.grade])
 
             self.possible_splits.append(AttrDict({
-                "first": first,
-                "second": second,
+                "splits": [first, second,],
                 "grade": grades_mean * (1 / (grades_range)),
             }))
 
