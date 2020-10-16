@@ -27,7 +27,8 @@ class ResultsBox extends React.Component{
         return <div className="box_container">
           <a>
               <img src={logo}/>
-              <br/>There is no associations.
+              <br/>
+              There is no associations.
           </a>
         </div>;
 

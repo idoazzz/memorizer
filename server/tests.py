@@ -1,5 +1,5 @@
 # TODO: Refactor with pytests.
-
+import asyncio
 from matcher import AssociationsMatcher
 
 words = [
@@ -20,11 +20,17 @@ words = [
     "subtle"
 ]
 
-for target_word in words:
-    match = AssociationsMatcher(target_word).most_associative
-    if match.second is None:
-        print(f"{match.first.word} {match.first.associations}")        
-    else:
-        print(f"{match.first.word} {match.first.associations}") 
-        print(f"{match.second.word} {match.second.associations}")
-    print()
+import time
+print(time.ctime())
+
+async def test():
+    for target_word in words:
+        match = AssociationsMatcher(target_word)
+        await match.generate_possible_splits()
+        print(time.ctime())
+        print(match.most_associative)
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(test())
+loop.close()

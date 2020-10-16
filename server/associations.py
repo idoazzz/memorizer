@@ -1,7 +1,7 @@
 """Finding word sound-like associations using Datamuse api."""
-import requests
 from statistics import mean
 from attrdict import AttrDict
+import requests_async as requests
 
 class Association:
     """Single word association.
@@ -52,21 +52,20 @@ class WordAssociations:
         self.grade = None
         self.limit = limit
         self.associations = None
-        self.generate_associations()
         
-    def generate_associations(self):
+    async def generate_associations(self):
         """Generate associations from Datamust api.
         
         * Get sound-like words.
         * Sort them by frequency.
         * Calculate the grade of the associations.
         """
-        response = requests.get(f"{self.API_BASE_URL}", params={
+        response = await requests.get(f"{self.API_BASE_URL}", params={
             "sl": self.word,    # Sound-like.
             "md": "f"           # Stands for frequency metadata.
-        }).json()
+        })
 
-        response = map(AttrDict, response)
+        response = map(AttrDict, response.json())
 
         # Create formatted frequency list.
         self.associations = [Association(word=data.word, score=int(data.score), 

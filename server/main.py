@@ -7,5 +7,6 @@ app = FastAPI()
 def associate_word(word: str):
     if word == "":
         return {}
-    match = AssociationsMatcher(word).most_associative
-    return match
+    match = AssociationsMatcher(word)
+    splits = await match.generate_possible_splits()
+    return splits.most_associative

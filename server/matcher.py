@@ -1,4 +1,6 @@
 """Match best associations to given word by splitting."""
+import asyncio
+
 from statistics import mean
 from attrdict import AttrDict
 from hyphenate import hyphenate_word
@@ -17,31 +19,49 @@ class AssociationsMatcher:
     def __init__(self, word):
         self.word = word
         self.possible_splits = []
-        self.generate_possible_splits()
     
-    def generate_possible_splits(self):
+    async def add_splits_pair(self, first, second):
+        """Add new splits pair asynchronously."""
+        first_task = asyncio.create_task(first.generate_associations())
+        second_task = asyncio.create_task(second.generate_associations())
+        
+        await asyncio.gather(first_task, second_task)
+                                
+        grades = (first.grade, second.grade)
+        grades_range = max(*grades) - min(*grades)
+        grades_mean = mean([first.grade, second.grade])
+
+        self.possible_splits.append(AttrDict({
+            "splits": [first, second,],
+            "grade": grades_mean * (1 / (grades_range)),
+        }))
+
+    
+    async def generate_possible_splits(self):
         # Handle short words (don't split - only one syllable).
         if len(hyphenate_word(self.word)) == 1:
-            word_associations = WordAssociations(self.word)
+            word_association = WordAssociations(self.word)
+            await word_association.generate_associations()
             self.possible_splits.append(AttrDict({
-                "splits": [word_associations,],
-                "grade": word_associations.grade,
+                "splits": [word_association,],
+                "grade": word_association.grade,
             }))
             return
 
+        tasks = []
+        
         # Iterate each combination of the word and calculate associations grade.
         for split_index in range(2, len(self.word)-1):
-            first = WordAssociations(self.word[:split_index])
-            second = WordAssociations(self.word[split_index:])
-            grades = (first.grade, second.grade)
-            grades_range = max(*grades) - min(*grades)
-            grades_mean = mean([first.grade, second.grade])
-
-            self.possible_splits.append(AttrDict({
-                "splits": [first, second,],
-                "grade": grades_mean * (1 / (grades_range)),
-            }))
-
+            first_split = self.word[:split_index]
+            second_split = self.word[split_index:]
+            
+            first = WordAssociations(first_split)
+            second = WordAssociations(second_split)
+            tasks.append(asyncio.create_task(self.add_splits_pair(first, second)))
+            
+        await asyncio.gather(*tasks)
+        
+            
     @property
     def most_associative(self):
         """Get most associative splits."""
