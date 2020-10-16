@@ -1,10 +1,12 @@
 // https://www.color-hex.com/color/1d2026
 $textColor: #282c34;
-$buttonColor: #0c0d11;
-$primaryColor: #1d2026;
-$backgroundColor: #070809;
+$inputColor: #00132441;
+$primaryColor: #00598d;
 $wordBackground: steelblue;
+$buttonColor: rgb(0, 57, 90);
+$loadingColor: rgb(0, 104, 189);
 $resultsBackgroundColor: #e8e8e9;
+$backgroundColor: rgb(0, 108, 133);
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
@@ -20,4 +22,8 @@ body {
 input{
   letter-spacing: 1pt;
   font-family: 'Roboto', sans-serif;
+}
+
+input:focus{
+  outline: none;
 }

@@ -8,13 +8,14 @@
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  background-color: $backgroundColor;
+  background: $backgroundColor;
+  background: radial-gradient(circle, rgba(0,60,73,1) 0%, rgba(9,70,121,1) 100%);
 }
 
 .results_container{
   order: 2;
   margin: 20px;
-  width: 400px;
+  width: 300px;
   height: auto;
 }
 
@@ -23,14 +24,12 @@
   margin: 20px;
 
   .main_input {
+    border: none;
     padding: 15px;
     color: white;
     font-size: 20px;     
-    background-color: #282c34;
-    border-style: solid;
-    border: none;
+    background-color: $inputColor;
     border-bottom: 5px solid $primaryColor;   
-    
   }  
 
   .submit_button{

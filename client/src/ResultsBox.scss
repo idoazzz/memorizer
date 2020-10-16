@@ -1,16 +1,18 @@
 @import './App.scss';
+@import './index.scss';
 
 .box_container{
+    padding: 30px;
     display: flex;
     width: inherit;
     height: inherit;
     overflow-y: auto;
-    padding: 30px;
+    border-radius: 20px;
     justify-items: center;
     align-content: center;
     flex-direction: column;
+    border: 10px solid $wordBackground;
     background-color: $resultsBackgroundColor;
-    border-top: 20px solid $resultsBackgroundColor;
 }
 
 .word_split{
@@ -24,14 +26,18 @@
 
 .associations_list{
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     line-height: 4em;
+    margin-top: 10px;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .association{
-    padding: 5px;
+    margin: 10px;
+    line-height: 1;
     color: $primaryColor;
+    border-bottom: 2px solid rgb(196, 196, 196);
 }
 
 .loading{
@@ -40,11 +46,11 @@
 
 @keyframes loading_box{
     0% {
-        border-color: lightcyan;
+        border-color: $wordBackground;
     }
 
     50% {
-        border-color: yellowgreen;
+        border-color: $loadingColor;
     }
 
     100% {
