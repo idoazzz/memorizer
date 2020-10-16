@@ -1,0 +1,34 @@
+@import './App.scss';
+
+.box_container{
+    display: flex;
+    padding: 20px;
+    width: inherit;
+    height: inherit;
+    overflow-y: auto;
+    justify-items: center;
+    align-content: center;
+    flex-direction: column;
+    background-color: $resultsBackgroundColor;
+}
+
+.word_split{
+    padding: 6px;
+    color: white;
+    display: inline;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: $wordBackground;
+}
+
+.associations_list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    line-height: 4em;
+}
+
+.association{
+    padding: 5px;
+    color: $primaryColor;
+}

@@ -1,0 +1,42 @@
+@import "index.scss";
+
+.app_container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh; /**TODO: ?**/
+  text-align: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  background-color: $backgroundColor;
+}
+
+.results_container{
+  order: 2;
+  margin: 20px;
+  width: 400px;
+  height: auto;
+}
+
+.main_form{
+  order: 1;
+  margin: 20px;
+
+  .main_input {
+    padding: 15px;
+    color: white;
+    font-size: 20px;     
+    background-color: #282c34;
+    border-style: solid;
+    border: none;
+    border-bottom: 5px solid $primaryColor;   
+    
+  }  
+
+  .submit_button{
+    font-weight: bolder;
+    color: $buttonColor;
+    background-color: $primaryColor;
+    border-bottom: 5px solid $buttonColor;
+  }
+}
