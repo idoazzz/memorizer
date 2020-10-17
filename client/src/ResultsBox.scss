@@ -4,8 +4,6 @@
 .box_container{
     padding: 30px;
     display: flex;
-    width: inherit;
-    height: inherit;
     overflow-y: auto;
     border-radius: 20px;
     justify-items: center;
@@ -43,6 +41,10 @@
 
 .association:hover{
     border-bottom: 2px solid steelblue;
+}
+
+.mark{
+    background-color: $highlightColor;
 }
 
 .loading{

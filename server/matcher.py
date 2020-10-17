@@ -4,7 +4,7 @@ import asyncio
 from statistics import mean
 from attrdict import AttrDict
 from hyphenate import hyphenate_word
-from associations import WordAssociations
+from associations import AssociationsGenerator
 
 class AssociationsMatcher:
     """Matching to specific word associations.
@@ -40,7 +40,7 @@ class AssociationsMatcher:
     async def generate_possible_splits(self):
         # Handle short words (don't split - only one syllable).
         if len(hyphenate_word(self.word)) == 1:
-            word_association = WordAssociations(self.word)
+            word_association = AssociationsGenerator(self.word)
             await word_association.generate_associations()
             self.possible_splits.append(AttrDict({
                 "splits": [word_association,],
@@ -55,8 +55,8 @@ class AssociationsMatcher:
             first_split = self.word[:split_index]
             second_split = self.word[split_index:]
             
-            first = WordAssociations(first_split)
-            second = WordAssociations(second_split)
+            first = AssociationsGenerator(first_split)
+            second = AssociationsGenerator(second_split)
             tasks.append(asyncio.create_task(self.add_splits_pair(first, second)))
             
         await asyncio.gather(*tasks)

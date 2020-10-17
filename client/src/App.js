@@ -19,7 +19,9 @@ class App extends React.Component{
 
   handleSubmit = event => {
     event.preventDefault()
-    
+    if(!this.state.word)
+      return;
+      
     if(this.state.isLoading){
       alert("Already searching another query.");  
       return;
@@ -46,7 +48,8 @@ class App extends React.Component{
           </form>
         </div>
         <div className="results_container">
-          <ResultsBox results={this.state.results}
+          <ResultsBox word={this.state.word}
+                      results={this.state.results}
                       isLoading={this.state.isLoading}
           ></ResultsBox>
         </div>
