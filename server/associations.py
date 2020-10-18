@@ -11,7 +11,7 @@ class Association:
         name (str): Word association.
         score (str): Similarity score.
         frequency (float): How frequent this word in the english language.
-        
+        definitions (list): Word definitions.
     Notes:
         * The value is the number of times the word (or multi-word phrase) 
         occurs per million words of English text according to Google Books 
@@ -23,8 +23,10 @@ class Association:
     SIMILARITY_WEIGHT = 0.8
     FREQUENCY_WEIGHT = 1 - SIMILARITY_WEIGHT
     
-    def __init__(self, word, score, frequency=MAX_FREQUENCY):
+    def __init__(self, word, score, definitions,
+                 frequency=MAX_FREQUENCY):
         self.name = word
+        self.definitions = definitions
         self.frequency = frequency / self.MAX_FREQUENCY
         self.similarity_score = score / self.MAX_SIMILARITY
         
@@ -105,6 +107,7 @@ class AssociationsGenerator(AbstractAssociationsGenerator):
         return [Association(
                     word=data.word, 
                     score=int(data.score), 
+                    definitions=data.defs if "defs" in data else [],
                     frequency=self.extract_frequency(data.tags)) 
                 for data in response]
                  
@@ -112,7 +115,7 @@ class AssociationsGenerator(AbstractAssociationsGenerator):
     async def get_associations(self):
         response = await requests.get(f"{self.API_BASE_URL}", params={
             "sl": self.word,    # Sound-like.
-            "md": "f"           # Stands for frequency metadata.
+            "md": "fd"           # Stands for frequency metadata.
         })
         return self.get_formatted_response(response)            
     

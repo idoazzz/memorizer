@@ -2,14 +2,16 @@
 $textColor: #282c34;
 $inputColor: #00132441;
 $primaryColor: #00598d;
-$highlightColor: #9e000060;
+$highlightColor: #fffb00a4;
 $wordBackground: steelblue;
+$placeholderColor: #00b7ff28;
 $buttonColor: rgb(0, 57, 90);
-$loadingColor: rgb(0, 104, 189);
+$loadingColor: rgb(0, 66, 121);
 $resultsBackgroundColor: #e8e8e9;
-$inputBorderColor: rgba(0, 21, 32, 0.705);
 $backgroundColor: rgb(0, 108, 133);
+$inputBorderColor: rgba(0, 21, 32, 0.705);
 
+// Import font.
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
 body {
@@ -28,4 +30,27 @@ input{
 
 input:focus{
   outline: none;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $placeholderColor;
+  letter-spacing: 4pt;
+}
+
+.loading{
+  animation: loading_border 1.5s infinite;
+}
+
+@keyframes loading_border{
+  0% {
+      border-color: $wordBackground;
+  }
+
+  50% {
+      border-color: $loadingColor;
+  }
+
+  100% {
+      border-color: $wordBackground;
+  }
 }

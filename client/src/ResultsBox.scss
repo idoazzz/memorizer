@@ -1,66 +1,54 @@
 @import './App.scss';
 @import './index.scss';
 
+// Results box container class.
+
 .box_container{
-    padding: 30px;
+    // Structure
     display: flex;
     overflow-y: auto;
-    border-radius: 20px;
     justify-items: center;
     align-content: center;
     flex-direction: column;
+
+    // Style
+    padding: 30px;
+    border-radius: 20px;
     border: 10px solid $wordBackground;
     background-color: $resultsBackgroundColor;
-}
 
-.word_split{
-    padding: 6px;
-    color: white;
-    display: inline;
-    font-size: 1.5rem;
-    font-weight: bold;
-    background-color: $wordBackground;
-}
 
-.associations_list{
-    display: flex;
-    flex-wrap: wrap;
-    line-height: 4em;
-    margin-top: 10px;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.association{
-    margin: 10px;
-    line-height: 1;
-    color: $primaryColor;
-    text-decoration: none;
-    border-bottom: 2px solid rgb(196, 196, 196);
-}
-
-.association:hover{
-    border-bottom: 2px solid steelblue;
-}
-
-.mark{
-    background-color: $highlightColor;
-}
-
-.loading{
-    animation: loading_box 1.5s infinite;
-}
-
-@keyframes loading_box{
-    0% {
-        border-color: $wordBackground;
+    .word_split{
+        padding: 6px;
+        color: white;
+        display: inline;
+        font-size: 1.5rem;
+        font-weight: bold;
+        background-color: $wordBackground;
     }
 
-    50% {
-        border-color: $loadingColor;
-    }
+    .associations_list{
+        display: flex;
+        flex-wrap: wrap;
+        line-height: 4em;
+        margin-top: 10px;
+        flex-direction: row;
+        justify-content: center;
 
-    100% {
-        border-color: lightcyan;
+        .association{
+            margin: 10px;
+            line-height: 1;
+            color: $primaryColor;
+            text-decoration: none;
+            border-bottom: 2px solid rgb(196, 196, 196);
+        }
+
+        .association:hover{
+            border-bottom: 2px solid steelblue;
+        }
+
+        .mark{
+            background-color: $highlightColor;
+        }
     }
 }

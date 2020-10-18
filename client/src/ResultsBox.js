@@ -25,7 +25,7 @@ class ResultsBox extends React.Component{
     this.setState({highlights})
   }
   
-  get_split_results = (index) => {
+  getSplitResults = (index) => {
     if(this.props.results.splits.length <= index)
       return; 
 
@@ -47,7 +47,7 @@ class ResultsBox extends React.Component{
     );
   }
   
-  get_hint(){
+  getAssociationHint(){
     if(this.state.highlights.length > 0)
       return <span>{this.props.word} > {this.state.highlights.join(" ")}</span>
     return;
@@ -66,9 +66,9 @@ class ResultsBox extends React.Component{
           </a>
         </div>;
     return <div className={box_class}>
-        {this.get_split_results(0)} 
-        {this.get_split_results(1)}
-        {this.get_hint()}
+        {this.getSplitResults(0)} 
+        {this.getSplitResults(1)}
+        {this.getAssociationHint()}
       </div>;
   }
 }
