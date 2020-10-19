@@ -61,7 +61,7 @@ class AssociationsMatcher:
             
         await asyncio.gather(*tasks)
         
-            
+    
     @property
     def most_associative(self):
         """Get most associative splits."""

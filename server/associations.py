@@ -1,6 +1,6 @@
 """Finding word sound-like associations using Datamuse api."""
+import datamuse
 from statistics import mean
-from attrdict import AttrDict
 from abc import abstractmethod
 import requests_async as requests
 
@@ -23,10 +23,8 @@ class Association:
     SIMILARITY_WEIGHT = 0.8
     FREQUENCY_WEIGHT = 1 - SIMILARITY_WEIGHT
     
-    def __init__(self, word, score, definitions,
-                 frequency=MAX_FREQUENCY):
+    def __init__(self, word, score, frequency=MAX_FREQUENCY):
         self.name = word
-        self.definitions = definitions
         self.frequency = frequency / self.MAX_FREQUENCY
         self.similarity_score = score / self.MAX_SIMILARITY
         
@@ -99,27 +97,15 @@ class AssociationsGenerator(AbstractAssociationsGenerator):
         word (str): Target word.
         grade (float): All associations grade. 
         associations (list): List of associations.
-    """
-    API_BASE_URL = "https://api.datamuse.com/words"
-    
+    """    
     def get_formatted_response(self, response):
-        response = map(AttrDict, response.json())
         return [Association(
                     word=data.word, 
                     score=int(data.score), 
-                    definitions=data.defs if "defs" in data else [],
-                    frequency=self.extract_frequency(data.tags)) 
+                    frequency=datamuse.extract_frequency(data.tags)) 
                 for data in response]
                  
     
     async def get_associations(self):
-        response = await requests.get(f"{self.API_BASE_URL}", params={
-            "sl": self.word,    # Sound-like.
-            "md": "fd"           # Stands for frequency metadata.
-        })
-        return self.get_formatted_response(response)            
-    
-    @staticmethod
-    def extract_frequency(frequency):
-        """Extract nemeric frequency from Datamuse frequency format."""
-        return float(frequency[0][2:])
+        response = await datamuse.get_soundlike_words(self.word)
+        return self.get_formatted_response(response)
