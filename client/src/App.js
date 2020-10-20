@@ -2,6 +2,7 @@ import './App.scss';
 import axios from 'axios';
 import React from 'react';
 import ResultsBox from './ResultsBox'
+import Dictionary from './Dictionary';
 
 class App extends React.Component{
   constructor(props){
@@ -10,6 +11,10 @@ class App extends React.Component{
       word: "",
       results: {},
       isLoading: false,
+      dictionary: {
+        word: "",
+        definitions: []
+      },
     };
   }
 
@@ -27,14 +32,24 @@ class App extends React.Component{
       return;
     }
     
-    this.setState({isLoading: true});
+    // TODO: Split to functions.
 
-    this.currentRequest = axios.get(`http://localhost:8000/${this.state.word}`).
+    this.setState({isLoading: true});
+    axios.get(`/associations/${this.state.word}`).
     then(response => {
       this.setState({
         isLoading: false,
         results: response.data,
       });
+    });
+    
+    axios.get(`/definitions/${this.state.word}`).
+    then(response => {
+      this.setState({
+        dictionary: {
+          word: response.data.word,
+          definitions: response.data.definitions,
+        }});
     });
   }
   
@@ -43,16 +58,17 @@ class App extends React.Component{
       <div className="app_container">
         <div className="main_form">
           <form onSubmit={this.handleSubmit}>
-            <input className="main_input" onChange={this.handleChange} placeholder="Memorize a word."/>
-            <input className="main_input submit_button" type="submit" value=">"/>
+            <input onChange={this.handleChange} placeholder="Memorize a word."/>
+            <input className="submit_button" type="submit" value=">"/>
           </form>
+          <Dictionary dictionary={this.state.dictionary}/>
         </div>
         <div className="results_container">
           <ResultsBox word={this.state.word}
                       results={this.state.results}
-                      isLoading={this.state.isLoading}
-          ></ResultsBox>
+                      isLoading={this.state.isLoading}/>
         </div>
+
       </div>
     );
   }

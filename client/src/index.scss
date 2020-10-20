@@ -11,8 +11,11 @@ $resultsBackgroundColor: #e8e8e9;
 $backgroundColor: rgb(0, 108, 133);
 $inputBorderColor: rgba(0, 21, 32, 0.705);
 
-// Import font.
+// Main font.
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+// Secondary font.
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,600;1,400&display=swap');
 
 body {
   margin: 0;
@@ -34,7 +37,6 @@ input:focus{
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: $placeholderColor;
-  letter-spacing: 4pt;
 }
 
 .loading{

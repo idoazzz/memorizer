@@ -10,32 +10,31 @@
   justify-content: center;
   background: $backgroundColor;
   background: radial-gradient(circle, rgba(0,60,73,1) 0%, rgba(9,70,121,1) 100%);
-}
 
-.results_container{
-  order: 2;
-  margin: 20px;
-  width: 300px;
-  height: auto;
-}
+  .main_form{
+    order: 1;
+    margin: 20px;
 
-.main_form{
-  order: 1;
-  margin: 20px;
-
-  .main_input {
-    border: none;
-    padding: 15px;
-    color: white;
-    font-size: 20px;     
-    background-color: $inputColor;
-    border-bottom: 5px solid $inputBorderColor;
-  }  
-
-  .submit_button{
-    font-weight: bolder;
-    color: $buttonColor;
-    background-color: $primaryColor;
-    border-bottom: 5px solid $buttonColor;
+    input {
+      border: none;
+      padding: 15px;
+      color: white;
+      font-size: 20px;     
+      background-color: $inputColor;
+      border-bottom: 5px solid $inputBorderColor;
+    }  
+  
+    .submit_button{
+      font-weight: bolder;
+      color: $buttonColor;
+      background-color: $primaryColor;
+      border-bottom: 5px solid $buttonColor;
+    }
+  }
+  .results_container{
+    order: 2;
+    margin: 20px;
+    width: 300px;
+    height: auto;
   }
 }
