@@ -1,0 +1,35 @@
+.definitions_container{
+    font-family: 'Crimson Text', serif;
+    width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+    letter-spacing: -0.5pt;
+
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: steelblue;
+    border-bottom: 5px solid rgb(12, 40, 63);
+
+    h3{
+        color: black;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.226);
+    }
+    ul{
+        padding: 0;
+    }
+
+    li{
+        display: block;
+        color: #001d1f;
+        margin-top: 5px;
+        letter-spacing: -0.5pt;
+
+        .definition_type{
+            font-style: italic;
+            color: #001d1faf;
+            margin-right: 5px;
+        }
+
+    }
+}
