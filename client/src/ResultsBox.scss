@@ -2,6 +2,9 @@
 @import './index.scss';
 
 // Results box container class.
+.logo{
+    width: 100%;    
+}
 
 .box_container{
     // Structure
@@ -13,10 +16,11 @@
 
     // Style
     padding: 30px;
-    border-radius: 20px;
-    border: 5px solid $wordBackground;
+    border: 5px solid $resultsBorderColor;
     background-color: $resultsBackgroundColor;
-
+    -webkit-box-shadow: 4px 3px 3px 0px rgba(0,0,0,0.10);
+    -moz-box-shadow: 4px 3px 3px 0px rgba(0,0,0,0.10);
+    box-shadow: 4px 3px 3px 0px rgba(0,0,0,0.10);
 
     .word_split{
         padding: 6px;
@@ -40,7 +44,7 @@
             line-height: 1;
             color: $primaryColor;
             text-decoration: none;
-            border-bottom: 2px solid rgb(196, 196, 196);
+            border-bottom: 1px solid rgb(196, 196, 196);
         }
 
         .association:hover{

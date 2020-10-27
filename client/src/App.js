@@ -3,7 +3,13 @@ import axios from 'axios';
 import React from 'react';
 import ResultsBox from './ResultsBox'
 import Dictionary from './Dictionary';
+import { AiOutlineAlert } from 'react-icons/ai';
+import { AiOutlineUp } from 'react-icons/ai';
+import { AiOutlineDown } from 'react-icons/ai';
 
+/**
+ * Main memorizer app component.
+ */
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -15,6 +21,7 @@ class App extends React.Component{
         word: "",
         definitions: []
       },
+      showingAdvancedSearch: true,
     };
   }
 
@@ -53,14 +60,47 @@ class App extends React.Component{
     });
   }
   
+  get_advanced_search = () => {
+    const showingAdvancedSearch = this.state.showingAdvancedSearch;
+    if(!showingAdvancedSearch)
+      return (
+      <div>
+      <AiOutlineDown
+        onClick={ () => { 
+          this.setState({showingAdvancedSearch: !showingAdvancedSearch}) 
+        }}
+        className="search_settings_button"/>
+      </div>
+      )
+    else{
+      return (
+      <div className="advanced_search">
+
+        <AiOutlineUp className="search_settings_button"
+      onClick={ () => { 
+        this.setState({showingAdvancedSearch: !showingAdvancedSearch}) 
+      }}
+      />
+      <span className="input_header">Results</span>
+      <input placeholder="5"/>
+      
+      <span className="input_header">Splits</span>
+      <input placeholder="5"/>
+      </div>
+     )
+    }
+  }
+  
   render(){
+    // Adding advanced search: Associations limit, splits number,
     return (
       <div className="app_container">
         <div className="main_form">
           <form onSubmit={this.handleSubmit}>
-            <input onChange={this.handleChange} placeholder="Memorize a word."/>
-            <input className="submit_button" type="submit" value=">"/>
+            <input className="main_input" onChange={this.handleChange} placeholder="Memorize a word."/>
+            <button className="main_input submit_button" type="submit"><AiOutlineAlert/></button>
           </form>
+          { this.get_advanced_search() }
           <Dictionary dictionary={this.state.dictionary}/>
         </div>
         <div className="results_container">

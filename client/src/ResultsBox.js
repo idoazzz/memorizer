@@ -1,6 +1,6 @@
 import React from 'react';
 import './ResultsBox.scss';
-import logo from './logo.png';
+import logo from './assets/logo.png';
 
 class ResultsBox extends React.Component{
   constructor(props){
@@ -49,8 +49,8 @@ class ResultsBox extends React.Component{
   
   getAssociationHint(){
     if(this.state.highlights.length > 0)
-      return <span>{this.props.word} > {this.state.highlights.join(" ")}</span>
-    return;
+      return <span>{this.props.word} > {this.state.highlights.join(" ")}</span>;
+    return ;
   }
 
   render(){
@@ -60,9 +60,8 @@ class ResultsBox extends React.Component{
         Object.keys(this.props.results).length === 0)
         return <div className={box_class}>
           <a>
-              <img src={logo}/>
+              <img src={logo} className="logo"/>
               <br/>
-              There is no associations.
           </a>
         </div>;
     return <div className={box_class}>

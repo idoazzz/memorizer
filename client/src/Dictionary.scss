@@ -1,20 +1,25 @@
+@import "index.scss";
+
 .definitions_container{
     font-family: 'Crimson Text', serif;
     width: 300px;
+    font-size: 12pt;
     max-height: 300px;
     overflow-y: auto;
     text-align: left;
     letter-spacing: -0.5pt;
-
+    border-radius: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: steelblue;
-    border-bottom: 5px solid rgb(12, 40, 63);
+    background-color: $resultsBackgroundColor;
+    border-bottom: 3px solid $buttonColor;
 
     h3{
+        padding: 5px;
         color: black;
         border-bottom: 1px solid rgba(0, 0, 0, 0.226);
     }
+    
     ul{
         padding: 0;
     }

@@ -1,5 +1,5 @@
-import './Dictionary.scss';
 import React from 'react';
+import './Dictionary.scss';
 
 // TODO: Change class name.
 class Dictionary extends React.Component{
@@ -15,7 +15,8 @@ class Dictionary extends React.Component{
        <h3>{this.props.dictionary.word}</h3>
         <ul>
         {
-          this.props.dictionary.definitions.map(definition => {
+          this.props.dictionary.definitions.map(
+            definition => {
               let defintion_parts = definition.split(/[^A-Za-z]/); 
               const definition_type = defintion_parts[0];
               const extracted_definition = defintion_parts.splice(1).join(" ");
@@ -23,7 +24,8 @@ class Dictionary extends React.Component{
               <span className="definition_type">{definition_type}</span>
               {` ${extracted_definition}.`} 
               </li>;
-          })
+            }
+          )
         }
         </ul>
     </div>

@@ -1,15 +1,21 @@
-// https://www.color-hex.com/color/1d2026
-$textColor: #282c34;
-$inputColor: #00132441;
-$primaryColor: #00598d;
-$highlightColor: #fffb00a4;
-$wordBackground: steelblue;
-$placeholderColor: #00b7ff28;
-$buttonColor: rgb(0, 57, 90);
-$loadingColor: rgb(0, 66, 121);
-$resultsBackgroundColor: #e8e8e9;
+// https://coolors.co/13293d-006494-247ba0-1b98e0-e8f1f2
+// https://coolors.co/e8f1f2
+
+$textColor: #13293D;
+$inputColor: white;
+$mainInputTextColor: #344d53;
+$primaryColor: #13293D;
+$highlightColor: #cefffca4;
+$wordBackground: hsl(208, 37%, 23%);
+$placeholderColor: #cfd8da;
+$buttonColor: #00b7ff;
+$loadingColor: rgb(0, 93, 168);
+$resultsBackgroundColor: #E8F1F2;
+$resultsBorderColor: rgba(255, 255, 255, 0.856);
 $backgroundColor: rgb(0, 108, 133);
-$inputBorderColor: rgba(0, 21, 32, 0.705);
+$inputBorderColor: #BDD7DA;
+$buttonColor: #6c8b8f;
+$advancedButtonColor: #c7ccaf;
 
 // Main font.
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
@@ -17,17 +23,18 @@ $inputBorderColor: rgba(0, 21, 32, 0.705);
 // Secondary font.
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,600;1,400&display=swap');
 
+// Inputs font.
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap');
+
 body {
   margin: 0;
   color: $textColor;
-  letter-spacing: 0.5pt;
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 input{
-  letter-spacing: 1pt;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -45,14 +52,28 @@ input:focus{
 
 @keyframes loading_border{
   0% {
-      border-color: $wordBackground;
+      border-color: $highlightColor;
   }
 
   50% {
-      border-color: $loadingColor;
+      border-color: white;
   }
 
   100% {
-      border-color: $wordBackground;
+      border-color: $highlightColor;
   }
+}
+
+/* Scrolling bar design. */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cfd8da;
 }
