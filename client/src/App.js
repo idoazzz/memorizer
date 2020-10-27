@@ -92,13 +92,17 @@ class App extends React.Component{
   }
   
   render(){
-    // Adding advanced search: Associations limit, splits number,
+    let loading = this.state.isLoading;
+    let button_class = loading ? "rotating" : "";
+
     return (
       <div className="app_container">
         <div className="main_form">
           <form onSubmit={this.handleSubmit}>
             <input className="main_input" onChange={this.handleChange} placeholder="Memorize a word."/>
-            <button className="main_input submit_button" type="submit"><AiOutlineAlert/></button>
+            <button className="main_input submit_button" type="submit">
+              <AiOutlineAlert className={button_class}/>
+            </button>
           </form>
           { this.get_advanced_search() }
           <Dictionary dictionary={this.state.dictionary}/>

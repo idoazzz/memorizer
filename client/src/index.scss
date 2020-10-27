@@ -47,23 +47,33 @@ input:focus{
 }
 
 .loading{
-  animation: loading_border 1.5s infinite;
+  animation: loading_border 3s infinite;
 }
 
 @keyframes loading_border{
   0% {
-      border-color: $highlightColor;
+      border-width: initial;
   }
 
   50% {
-      border-color: white;
+    border-width: 10px;
   }
 
-  100% {
-      border-color: $highlightColor;
+  100% {      
+    border-width: initial;
   }
 }
 
+.rotating{
+  animation: rotating_icon 1.5s infinite;
+}
+
+@keyframes rotating_icon{
+  0% {transform:rotate(0deg);}
+  40% {transform:rotate(-20deg);}
+  80% {transform:rotate(20deg);}
+  100% {transform:rotate(0deg);}
+}
 /* Scrolling bar design. */
 
 ::-webkit-scrollbar {
@@ -71,7 +81,7 @@ input:focus{
 }
 
 ::-webkit-scrollbar-track {
-  background: white;
+  background: rgb(236, 236, 236);
 }
 
 ::-webkit-scrollbar-thumb {
