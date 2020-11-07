@@ -12,19 +12,17 @@ import { AiOutlineDown } from 'react-icons/ai';
  */
 class App extends React.Component{
   
+  TYPING_TIMEOUT = 1000 // miliseconds
   DEFAULT_ASSOCIATIONS_LIMIT = 10;
   
   constructor(props){
     super(props);
+    this.typingTimer = 0;
     this.state = {
       // User input word.
       word: "",
-      closest_word: "",
-
-      // TODO: Continue with the timer: https://stackoverflow.com/questions/42217121/how-to-start-search-only-when-user-stops-typing
-      typing: false,
-      typingTimer: 0,
-
+      closestWord: "",
+      
       results: {},
       isLoading: false,
       
@@ -36,58 +34,67 @@ class App extends React.Component{
 
       // Advanced search.
       showingAdvancedSearch: true,
-      associations_limit: this.DEFAULT_ASSOCIATIONS_LIMIT,
+      associationsLimit: this.DEFAULT_ASSOCIATIONS_LIMIT,
     };
   }
 
   handleMainInputChange = event => {
-    let current_word = event.target.value; 
-    this.setState({word: current_word});
+    let currentWord = event.target.value; 
+    this.setState({
+      word: currentWord,
+      closestWord: ""
+    });
     
-    if(this.state.word === ""){
+    if(currentWord === ""){
       return;
     }
+
+    if(this.typingTimer){
+      clearTimeout(this.typingTimer);
+    }
+
+    this.typingTimer = setTimeout(() => {
+      this.findClosestWord(currentWord);
+    }, this.TYPING_TIMEOUT);
   }
 
-  findClosestWord = current_word => {
-    axios.get(`/closest/${current_word}`).
+  findClosestWord = word => {
+    axios.get(`/closest/${word}`).
     then(response => {
-      this.setState({
-        closest_word: response.data.word,
-      });
+      if(word === this.state.word){
+        // If the current input word is the searched word.
+        console.log(response.data.word)
+        this.setState({
+          closestWord: response.data.word,
+        });
+      }
     });
   }
 
   handleAssociationsLimitChange = event => {
-    this.setState({associations_limit: event.target.value});
-  }
-
-  getWordCorrection = () => {
-    if(this.state.closest_word !== this.state.word &&
-       this.state.closest_word !== ""){
-      return <div className="helper">
-        Did you mean <i>{this.state.closest_word}</i>?
-      </div>;
-    }  
-    return <div></div>;
+    this.setState({associationsLimit: event.target.value});
   }
 
   handleSubmit = event => {
     event.preventDefault()
-    if(!this.state.word)
+    let searchedWord = this.state.word;
+    if(!searchedWord)
       return;
       
     if(this.state.isLoading){
       alert("Already searching another query.");  
       return;
     }
-    
-    // TODO: Split to functions.
 
+    this.fetchWordDefinition(searchedWord);
+    this.fetchWordAssociations(searchedWord);
+  }
+
+  fetchWordAssociations = word => {
     this.setState({isLoading: true});
-    axios.get(`/associations/${this.state.word}`, {
+    axios.get(`/associations/${word}`, {
       params: {
-        limit: this.state.associations_limit
+        limit: this.state.associationsLimit
       }
     }).
     then(response => {
@@ -96,8 +103,10 @@ class App extends React.Component{
         results: response.data,
       });
     });
-    
-    axios.get(`/definitions/${this.state.word}`).
+  }
+
+  fetchWordDefinition = word => {
+    axios.get(`/definitions/${word}`).
     then(response => {
       this.setState({
         dictionary: {
@@ -107,7 +116,20 @@ class App extends React.Component{
     });
   }
   
-  getAdvancedSearch = () => {
+  getWordCorrectionBox = () => {
+    if(this.state.closestWord !== this.state.word &&
+       this.state.closestWord !== ""){
+      return <div className="helper" 
+                  onClick={() => this.setState({
+                    word: this.state.closestWord
+                  })}>
+        Did you mean <i>{this.state.closestWord}</i>?
+      </div>;
+    }  
+    return <div></div>;
+  }
+  
+  getAdvancedSearchBox = () => {
     const showingAdvancedSearch = this.state.showingAdvancedSearch;
     if(!showingAdvancedSearch)
       return (
@@ -130,7 +152,7 @@ class App extends React.Component{
       />
       <span className="input_header">Associations</span>
       <input placeholder="?" onChange={this.handleAssociationsLimitChange} 
-             value={this.state.associations_limit}/>
+             value={this.state.associationsLimit}/>
       </div>
      )
     }
@@ -144,13 +166,14 @@ class App extends React.Component{
       <div className="app_container">
         <div className="main_form">
           <form onSubmit={this.handleSubmit}>
-            <input className="main_input" onChange={this.handleMainInputChange} placeholder="Memorize a word."/>
+            <input className="main_input" onChange={this.handleMainInputChange} 
+                   placeholder="Memorize a word." value={this.state.word}/>
             <button className="main_input submit_button" type="submit">
               <AiOutlineAlert className={button_class}/>
             </button>
           </form>
-          { this.getWordCorrection() }
-          { this.getAdvancedSearch() }
+          { this.getWordCorrectionBox() }
+          { this.getAdvancedSearchBox() }
           <Dictionary dictionary={this.state.dictionary} word={this.state.word}/>
         </div>
         <div className="results_container">
