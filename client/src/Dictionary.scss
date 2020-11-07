@@ -4,7 +4,7 @@
     font-family: 'Crimson Text', serif;
     width: 300px;
     font-size: 12pt;
-    max-height: 300px;
+    max-height: 200px;
     overflow-y: auto;
     text-align: left;
     letter-spacing: -0.5pt;
@@ -13,9 +13,11 @@
     padding-right: 20px;
     border: 5px solid $resultsBorderColor;
     background-color: $resultsBackgroundColor;
+    
     -webkit-box-shadow: 4px 3px 3px 0px rgba(0,0,0,0.10);
     -moz-box-shadow: 4px 3px 3px 0px rgba(0,0,0,0.10);
     box-shadow: 4px 3px 3px 0px rgba(0,0,0,0.10);
+
     h3{
         padding: 5px;
         color: black;

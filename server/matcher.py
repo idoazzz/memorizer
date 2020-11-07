@@ -16,9 +16,10 @@ class AssociationsMatcher:
         word (str): Given word.
         possible_splits (list): Possible splits with associations.
     """
-    def __init__(self, word):
+    def __init__(self, word, associations_limit):
         self.word = word
         self.possible_splits = []
+        self.associations_limit = associations_limit
     
     async def add_splits_pair(self, first, second):
         """Add new splits pair asynchronously."""
@@ -40,7 +41,9 @@ class AssociationsMatcher:
     async def generate_possible_splits(self):
         # Handle short words (don't split - only one syllable).
         if len(hyphenate_word(self.word)) == 1:
-            word_association = AssociationsGenerator(self.word)
+            word_association = AssociationsGenerator(
+                self.word,
+                limit=self.associations_limit)
             await word_association.generate_associations()
             self.possible_splits.append(AttrDict({
                 "splits": [word_association,],
@@ -55,8 +58,10 @@ class AssociationsMatcher:
             first_split = self.word[:split_index]
             second_split = self.word[split_index:]
             
-            first = AssociationsGenerator(first_split)
-            second = AssociationsGenerator(second_split)
+            first = AssociationsGenerator(first_split,
+                                          limit=self.associations_limit)
+            second = AssociationsGenerator(second_split,
+                                          limit=self.associations_limit)
             tasks.append(asyncio.create_task(self.add_splits_pair(first, second)))
             
         await asyncio.gather(*tasks)

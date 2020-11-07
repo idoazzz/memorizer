@@ -3,6 +3,13 @@ import asyncio
 from matcher import AssociationsMatcher
 
 words = [
+    "productiv",
+    "production",
+    "adventure",
+    "mentorize",
+    "billing",
+    "consider",
+    "consideration",
     "forewarned",
     "predominantly",
     "misgivings",

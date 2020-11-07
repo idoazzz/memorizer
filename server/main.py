@@ -7,11 +7,11 @@ app = FastAPI()
 
 
 @app.get("/associations/{word}")
-async def associate_word(word: str = ""):
+async def associate_word(word: str = "", limit: int = 10):
     # TODO: Check empty word and other usecases.
-    if word == "":
+    if word == "" or limit == 0:
         return {}
-    match = AssociationsMatcher(word)
+    match = AssociationsMatcher(word, limit)
     await match.generate_possible_splits()
     return match.most_associative
 
@@ -27,7 +27,6 @@ async def get_definition(word: str = ""):
             It fixes spelling problems. 
             For example: Paralize -> Paralyze.
     """
-    # TODO: Check empty word and other usecases.
     if word == "":
         return {"definitions": []}
     
@@ -37,4 +36,20 @@ async def get_definition(word: str = ""):
         "word": closest_word.word,
         "definitions":
             closest_word.defs if "defs" in closest_word else []
+    }
+    
+
+@app.get("/closest/{word}")
+async def get_closest_word(word: str = ""):
+    """Get closest word.
+        
+        Using datamuse api.
+    """
+    if word == "":
+        return {"definitions": []}
+    
+    closest_word = await datamuse.get_closest_word(word)
+   
+    return {
+        "word": closest_word.word,
     }

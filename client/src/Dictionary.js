@@ -8,7 +8,8 @@ class Dictionary extends React.Component{
   }
 
   render(){
-    if(this.props.dictionary.definitions.length==0)
+    if(this.props.dictionary.definitions.length==0 
+      || this.props.dictionary.word !== this.props.word)
     return <div></div>
 
     return <div className="definitions_container">
