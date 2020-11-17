@@ -33,6 +33,7 @@ class App extends React.Component{
       },
 
       // Advanced search.
+      autoSplitting: true,
       showingAdvancedSearch: true,
       associationsLimit: this.DEFAULT_ASSOCIATIONS_LIMIT,
     };
@@ -94,6 +95,7 @@ class App extends React.Component{
     this.setState({isLoading: true});
     axios.get(`/associations/${word}`, {
       params: {
+        split: this.state.autoSplitting,
         limit: this.state.associationsLimit
       }
     }).
@@ -128,6 +130,10 @@ class App extends React.Component{
     }  
     return <div></div>;
   }
+
+  handleAutosplittingCheck = () => {
+    this.setState({ autoSplitting: !this.state.autoSplitting })
+  }
   
   getAdvancedSearchBox = () => {
     const showingAdvancedSearch = this.state.showingAdvancedSearch;
@@ -144,17 +150,21 @@ class App extends React.Component{
     else{
       return (
       <div className="advanced_search">
-
         <AiOutlineUp className="search_settings_button"
-      onClick={ () => { 
-        this.setState({showingAdvancedSearch: !showingAdvancedSearch}) 
-      }}
-      />
-      <span className="input_header">Associations</span>
-      <input placeholder="?" onChange={this.handleAssociationsLimitChange} 
-             value={this.state.associationsLimit}/>
+            onClick={ () => { 
+              this.setState({showingAdvancedSearch: !showingAdvancedSearch}) 
+            }}
+        />
+        <span className="input_header">Associations</span>
+        <input placeholder="?" onChange={this.handleAssociationsLimitChange} 
+              value={this.state.associationsLimit}/>
+
+        <span className="input_header"> Autosplitting</span>
+        <input className="checkbox" checked={this.state.autoSplitting} 
+                onChange={this.handleAutosplittingCheck} type="checkbox"/>
       </div>
      )
+     // Insert to the  autosplittting functionality and design.
     }
   }
   

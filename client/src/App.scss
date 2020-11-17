@@ -33,7 +33,6 @@
 
     .search_settings_button{
       margin: 10px;
-      margin-right: 10px;
       color: $advancedButtonColor;
       font-size: 16pt;
     }
@@ -48,8 +47,9 @@
     }
 
     .advanced_search{
-      margin: 20px;
+      margin: 10px;
       display: flex;
+      flex-wrap: wrap;
       min-height: 20px;
       align-items: center;
       flex-direction: row;
@@ -58,7 +58,8 @@
 
       span{
         color: #7ea1b6;
-        margin: 10px;
+        font-size: 10pt;
+        margin: 15px;
       }
 
       input{
@@ -68,10 +69,15 @@
         padding: 5px;
         color: rgb(221, 221, 221);
         border: none;
-        font-size: 16pt;
+        font-size: 12pt;
         text-align: center;
         background-color: #fff6f6;
         border-bottom: 5px solid #cfdddf;
+      }
+
+      .checkbox{
+        width: 20px; /*Desired width*/
+        height: 20px; /*Desired height*/
       }
     }
   }

@@ -7,13 +7,31 @@ app = FastAPI()
 
 
 @app.get("/associations/{word}")
-async def associate_word(word: str = "", limit: int = 10):
-    # TODO: Check empty word and other usecases.
+async def associate_word(word: str = "", limit: int = 10, 
+                         split: bool = True):
+    """Get specific word associations.
+
+    Args:
+        word (str, optional): Target word. Defaults to "".
+        limit (int, optional): Associations limit. Defaults to 10.
+        split (bool, optional): Should the word be splitted. Defaults to True.
+
+    Notes:
+        If the split flag is on the word will be splitted by the backend.
+        The split will be the most associative by grades.
+    
+    Returns:
+        json. Associations with extra metadata.
+    """
     if word == "" or limit == 0:
         return {}
-    match = AssociationsMatcher(word, limit)
-    await match.generate_possible_splits()
-    return match.most_associative
+
+    if split:
+        match = AssociationsMatcher(word, limit)
+        await match.generate_possible_splits()
+        return match.most_associative
+
+    return await AssociationsMatcher.get_associations(word, limit)
 
 @app.get("/definitions/{word}")
 async def get_definition(word: str = ""):

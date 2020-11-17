@@ -21,23 +21,6 @@ class AssociationsMatcher:
         self.possible_splits = []
         self.associations_limit = associations_limit
     
-    async def add_splits_pair(self, first, second):
-        """Add new splits pair asynchronously."""
-        first_task = asyncio.create_task(first.generate_associations())
-        second_task = asyncio.create_task(second.generate_associations())
-        
-        await asyncio.gather(first_task, second_task)
-                                
-        grades = (first.grade, second.grade)
-        grades_range = max(*grades) - min(*grades)
-        grades_mean = mean([first.grade, second.grade])
-
-        self.possible_splits.append(AttrDict({
-            "splits": [first, second,],
-            "grade": grades_mean * (1 / (grades_range)),
-        }))
-
-    
     async def generate_possible_splits(self):
         # Handle short words (don't split - only one syllable).
         if len(hyphenate_word(self.word)) == 1:
@@ -66,7 +49,26 @@ class AssociationsMatcher:
             
         await asyncio.gather(*tasks)
         
-    
+    async def add_splits_pair(self, first, second):
+        """Add new splits pair asynchronously.
+        
+        first (AssociationsGenerator): First word split.
+        second (AssociationsGenerator): Second word split.
+        """
+        first_task = asyncio.create_task(first.generate_associations())
+        second_task = asyncio.create_task(second.generate_associations())
+        
+        await asyncio.gather(first_task, second_task)
+                                
+        grades = (first.grade, second.grade)
+        grades_range = max(*grades) - min(*grades)
+        grades_mean = mean([first.grade, second.grade])
+
+        self.possible_splits.append(AttrDict({
+            "splits": [first, second,],
+            "grade": grades_mean * (1 / (grades_range)),
+        }))
+
     @property
     def most_associative(self):
         """Get most associative splits."""
@@ -75,3 +77,20 @@ class AssociationsMatcher:
             if split.grade > max_graded_split.grade:
                 max_graded_split = split
         return max_graded_split
+    
+    
+    @staticmethod
+    async def get_associations(word, limit):
+        """Get associations from list of words.
+
+        Args:
+            word (str): Target words.
+            limit (int): Associations limit.
+        """
+        # TODO: Get associations for specific word.
+        word_association = AssociationsGenerator(word, limit=limit)
+        await word_association.generate_associations()
+        return AttrDict({
+            "splits": [word_association,],
+            "grade": word_association.grade,
+        })
