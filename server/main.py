@@ -23,7 +23,7 @@ async def associate_word(word: str = "", limit: int = 10,
     Returns:
         json. Associations with extra metadata.
     """
-    if word == "" or limit == 0:
+    if not word.isalpha() or word == "" or limit == 0:
         return {}
 
     if split:

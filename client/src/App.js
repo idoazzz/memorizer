@@ -76,10 +76,25 @@ class App extends React.Component{
     this.setState({associationsLimit: event.target.value});
   }
 
+  getErrorBox = () => {
+    if(!this.isAllLetters(this.state.word) && this.state.word){
+      return <div className="helper error"> 
+                  We don't like associate stuff that are not letters...
+              </div>; 
+    }
+  }
+
+  isAllLetters = (string) => {
+   let letters = /^[A-Za-z]+$/;
+   if(string.match(letters))
+      return true;
+   return false;
+  }
+
   handleSubmit = event => {
     event.preventDefault()
     let searchedWord = this.state.word;
-    if(!searchedWord)
+    if(!this.isAllLetters(searchedWord))
       return;
       
     if(this.state.isLoading){
@@ -184,6 +199,7 @@ class App extends React.Component{
           </form>
           { this.getWordCorrectionBox() }
           { this.getAdvancedSearchBox() }
+          { this.getErrorBox() }
           <Dictionary dictionary={this.state.dictionary} word={this.state.word}/>
         </div>
         <div className="results_container">
