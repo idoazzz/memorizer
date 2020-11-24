@@ -9,7 +9,7 @@ words = [
     "mentorize",
     "billing",
     "consider",
-    "consideration",
+    "consideration", # Get high score because there are many forms of the same word (consider).
     "forewarned",
     "predominantly",
     "misgivings",
@@ -32,10 +32,10 @@ print(time.ctime())
 
 async def test():
     for target_word in words:
-        match = AssociationsMatcher(target_word)
+        match = AssociationsMatcher(target_word, associations_limit=10)
         await match.generate_possible_splits()
         print(time.ctime())
-        print(match.most_associative)
+        print(f"{target_word} {match.most_associative}")
 
 
 loop = asyncio.get_event_loop()

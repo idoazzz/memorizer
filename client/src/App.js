@@ -37,10 +37,18 @@ class App extends React.Component{
       showingAdvancedSearch: true,
       associationsLimit: this.DEFAULT_ASSOCIATIONS_LIMIT,
     };
+    
+    // Cancel token for pending requests.
+    this.current_word_requests_cancel_token = axios.CancelToken.source();
   }
 
   handleMainInputChange = event => {
-    let currentWord = event.target.value; 
+    let currentWord = event.target.value;
+    // Cancel token for request 
+    if(this.state.isLoading){
+      this.current_word_requests_cancel_token.cancel();
+      this.current_word_requests_cancel_token = axios.CancelToken.source();
+    }
     this.setState({
       word: currentWord,
       closestWord: ""
@@ -60,7 +68,9 @@ class App extends React.Component{
   }
 
   findClosestWord = word => {
-    axios.get(`/closest/${word}`).
+    axios.get(`/closest/${word}`,{
+      cancelToken: this.current_word_requests_cancel_token.token,
+    }).
     then(response => {
       if(word === this.state.word){
         // If the current input word is the searched word.
@@ -69,7 +79,7 @@ class App extends React.Component{
           closestWord: response.data.word,
         });
       }
-    });
+    }).catch(() => {});
   }
 
   handleAssociationsLimitChange = event => {
@@ -93,14 +103,9 @@ class App extends React.Component{
 
   handleSubmit = event => {
     event.preventDefault()
-    let searchedWord = this.state.word;
+    let searchedWord = this.state.word.toLowerCase();
     if(!this.isAllLetters(searchedWord))
       return;
-      
-    if(this.state.isLoading){
-      alert("Already searching another query.");  
-      return;
-    }
 
     this.fetchWordDefinition(searchedWord);
     this.fetchWordAssociations(searchedWord);
@@ -109,6 +114,7 @@ class App extends React.Component{
   fetchWordAssociations = word => {
     this.setState({isLoading: true});
     axios.get(`/associations/${word}`, {
+      cancelToken: this.current_word_requests_cancel_token.token,
       params: {
         split: this.state.autoSplitting,
         limit: this.state.associationsLimit
@@ -119,27 +125,30 @@ class App extends React.Component{
         isLoading: false,
         results: response.data,
       });
-    });
+    }).catch(() => {});
   }
 
   fetchWordDefinition = word => {
-    axios.get(`/definitions/${word}`).
+    axios.get(`/definitions/${word}`, {
+      cancelToken: this.current_word_requests_cancel_token.token,
+    }).
     then(response => {
       this.setState({
         dictionary: {
           word: response.data.word,
           definitions: response.data.definitions,
         }});
-    });
+    }).catch(() => {});
   }
   
   getWordCorrectionBox = () => {
-    if(this.state.closestWord !== this.state.word &&
+    if(this.state.closestWord !== this.state.word.toLowerCase() &&
        this.state.closestWord !== ""){
       return <div className="helper" 
-                  onClick={() => this.setState({
-                    word: this.state.closestWord
-                  })}>
+                  onClick={() => {
+                    this.setState({word: this.state.closestWord});
+                    this.handleSubmit()
+                    }}>
         Did you mean <i>{this.state.closestWord}</i>?
       </div>;
     }  

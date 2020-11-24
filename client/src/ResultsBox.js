@@ -47,12 +47,6 @@ class ResultsBox extends React.Component{
     );
   }
   
-  getAssociationHint(){
-    if(this.state.highlights.length > 0)
-      return <span>{this.props.word} > {this.state.highlights.join(" ")}</span>;
-    return ;
-  }
-
   render(){
     let loading = this.props.isLoading;
     let box_class = loading ? "box_container loading" : "box_container";
@@ -67,7 +61,6 @@ class ResultsBox extends React.Component{
     return <div className={box_class}>
         {this.getSplitResults(0)} 
         {this.getSplitResults(1)}
-        {this.getAssociationHint()}
       </div>;
   }
 }

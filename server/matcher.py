@@ -59,11 +59,18 @@ class AssociationsMatcher:
         second_task = asyncio.create_task(second.generate_associations())
         
         await asyncio.gather(first_task, second_task)
-                                
+        
         grades = (first.grade, second.grade)
         grades_range = max(*grades) - min(*grades)
         grades_mean = mean([first.grade, second.grade])
 
+        if grades_range == 0:
+            self.possible_splits.append(AttrDict({
+                "splits": [first, second,],
+                "grade": grades_mean,
+            }))
+            return        
+        
         self.possible_splits.append(AttrDict({
             "splits": [first, second,],
             "grade": grades_mean * (1 / (grades_range)),
