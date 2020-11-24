@@ -3,8 +3,8 @@ import axios from 'axios';
 import React from 'react';
 import ResultsBox from './ResultsBox'
 import Dictionary from './Dictionary';
-import { AiOutlineAlert } from 'react-icons/ai';
 import { AiOutlineUp } from 'react-icons/ai';
+import { AiOutlineAlert } from 'react-icons/ai';
 import { AiOutlineDown } from 'react-icons/ai';
 
 /**
@@ -89,7 +89,7 @@ class App extends React.Component{
   getErrorBox = () => {
     if(!this.isAllLetters(this.state.word) && this.state.word){
       return <div className="helper error"> 
-                  We don't like associate stuff that are not letters...
+            <AiOutlineAlert className=""/> We don't like associate stuff that are not letters...
               </div>; 
     }
   }
@@ -146,9 +146,8 @@ class App extends React.Component{
        this.state.closestWord !== ""){
       return <div className="helper" 
                   onClick={() => {
-                    this.setState({word: this.state.closestWord});
-                    this.handleSubmit()
-                    }}>
+                      this.setState({word: this.state.closestWord});
+              }}>
         Did you mean <i>{this.state.closestWord}</i>?
       </div>;
     }  
@@ -188,7 +187,6 @@ class App extends React.Component{
                 onChange={this.handleAutosplittingCheck} type="checkbox"/>
       </div>
      )
-     // Insert to the  autosplittting functionality and design.
     }
   }
   
@@ -200,6 +198,7 @@ class App extends React.Component{
       <div className="app_container">
         <div className="main_form">
           <form onSubmit={this.handleSubmit}>
+          { this.getErrorBox() }
             <input className="main_input" onChange={this.handleMainInputChange} 
                    placeholder="Memorize a word." value={this.state.word}/>
             <button className="main_input submit_button" type="submit">
@@ -208,7 +207,6 @@ class App extends React.Component{
           </form>
           { this.getWordCorrectionBox() }
           { this.getAdvancedSearchBox() }
-          { this.getErrorBox() }
           <Dictionary dictionary={this.state.dictionary} word={this.state.word}/>
         </div>
         <div className="results_container">
