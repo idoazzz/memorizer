@@ -52,15 +52,15 @@ input:focus{
 
 @keyframes loading_border{
   0% {
-      border-width: initial;
+      border-color: white;
   }
 
   50% {
-    border-width: 10px;
+    border-color: #00000009;
   }
 
   100% {      
-    border-width: initial;
+    border-color: white;
   }
 }
 

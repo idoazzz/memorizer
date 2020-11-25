@@ -33,7 +33,7 @@ class App extends React.Component{
       },
 
       // Advanced search.
-      autoSplitting: true,
+      autoSplitting: false,
       showingAdvancedSearch: true,
       associationsLimit: this.DEFAULT_ASSOCIATIONS_LIMIT,
     };

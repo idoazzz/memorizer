@@ -1,10 +1,14 @@
 """Main memorize server entry point."""
 import datamuse
 from fastapi import FastAPI
-from matcher import AssociationsMatcher
+from associations import get_associations
+from auto_splitter import get_auto_splits_associations
 
 app = FastAPI()
 
+def valid_word(word):
+    """Check if the word is valid."""
+    return word.isalpha() and word != ""
 
 @app.get("/associations/{word}")
 async def associate_word(word: str = "", limit: int = 10, 
@@ -23,37 +27,39 @@ async def associate_word(word: str = "", limit: int = 10,
     Returns:
         json. Associations with extra metadata.
     """
-    if not word.isalpha() or word == "" or limit == 0:
+    if not valid_word(word) or limit == 0:
         return {}
-
+    
     if split:
-        match = AssociationsMatcher(word, limit)
-        await match.generate_possible_splits()
-        return match.most_associative
-
-    return await AssociationsMatcher.get_associations(word, limit)
+        pair = await get_auto_splits_associations(word, limit)
+        return { 
+            "splits": [word_associations.to_dictionary() for 
+                       word_associations in pair] 
+        }
+        
+    # Get the first and only association.
+    result = await get_associations([word], limit)
+    word_associations = result.pop()
+    return { "splits": [word_associations.to_dictionary()] }
 
 @app.get("/definitions/{word}")
 async def get_definition(word: str = ""):
     """Get definition of specific word.
         
-        Using datamuse api.
-        
-        Notes:
-            If the word is not exists, the definition
-            will be the definition of the most closest word.
-            It fixes spelling problems. 
-            For example: Paralize -> Paralyze.
+    Notes:
+        If the word is not exists, the definition
+        will be the definition of the most closest word.
+        It fixes spelling problems. 
+        For example: Paralize -> Paralyze.
     """
-    if word == "":
+    if not valid_word(word):
         return {"definitions": []}
     
-    closest_word = await datamuse.get_closest_word(word)
-   
+    result = await datamuse.get_closest_word(word)
     return {
-        "word": closest_word.word,
+        "word": result.word,
         "definitions":
-            closest_word.defs if "defs" in closest_word else []
+            result.defs if "defs" in result else []
     }
     
 
@@ -63,11 +69,10 @@ async def get_closest_word(word: str = ""):
         
         Using datamuse api.
     """
-    if word == "":
+    if not valid_word(word):
         return {"definitions": []}
     
     closest_word = await datamuse.get_closest_word(word)
-   
     return {
         "word": closest_word.word,
     }

@@ -29,6 +29,8 @@ class ResultsBox extends React.Component{
     if(this.props.results.splits.length <= index)
       return; 
 
+    console.dir(this.props);
+
     let associations_list = this.props.results.splits[index].associations.map(result => {
       let className = "association";
       if(this.state.highlights.includes(result.name))
