@@ -44,10 +44,12 @@ class Dictionary extends React.Component {
       return <div></div>
     }
     
-    return <div className="definitions_container">
-      <h3> {this.props.dictionary.word} </h3>
-      <ul> {this.getDictionaryDefinitions(this.props.dictionary.definitions)} </ul>
-    </div>
+    return (
+      <div className="definitions_container">
+        <h3> {this.props.dictionary.word} </h3>
+        <ul> {this.getDictionaryDefinitions(this.props.dictionary.definitions)} </ul>
+      </div>
+    )
   }
 }
 
