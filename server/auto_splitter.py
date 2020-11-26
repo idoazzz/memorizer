@@ -7,6 +7,7 @@ from hyphenate import hyphenate_word
 from associations import get_associations
 
 MIN_WORD_LENGTH = 5
+MIN_ASSOCIATION_LENGTH = 3
 
 async def get_auto_splits_associations(word, limit):
     """Get the most associative splits automatically.
@@ -25,7 +26,7 @@ async def get_auto_splits_associations(word, limit):
         return result
     
     # Get associations of all word split combinations async.
-    for split_index in range(3, len(word)-2):
+    for split_index in range(MIN_ASSOCIATION_LENGTH, len(word) - MIN_ASSOCIATION_LENGTH + 1):
         tasks.append(
             asyncio.create_task(
                 get_associations(
