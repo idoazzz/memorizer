@@ -46,9 +46,11 @@ class ResultsBox extends React.Component{
   getResultsSection = (results) => {
     let associationsList = results.associations.map(result => {
       let className = "association";
+      
       if(this.isAlreadyHighlighted(result.name))
         className += " mark"
-      return <a className={className} href="#" onClick={this.handleWordClick}> {result.name} </a>;
+
+      return <a className={className} href="#" onClick={this.handleWordClick}>{result.name}</a>;
     });
     return (
       <div>
