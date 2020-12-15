@@ -4,7 +4,6 @@ import pytest
 from server.associations_manager.auto_splitter import \
     get_auto_splits_associations
 
-# TODO: Increase!
 SUCCESS_RATE = 0.5
 
 words = {
