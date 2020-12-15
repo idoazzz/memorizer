@@ -15,4 +15,5 @@ There are a lot of methods, tricks and ways to learn new english words.
     * `bar game`.
 * **BOUND** your association to the new word! We know by the displayed definitions that bargain is negotiation of terms -
     * `Every time you will negotiate you have to start with bar game. Without it you will lose!`
-* Now, we will remember what is bargain! (hopefully)
+
+Now, we will remember what is bargain! (hopefully)
