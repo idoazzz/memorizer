@@ -1,3 +1,4 @@
+"""Test server REST endpoints."""
 import pytest
 from attrdict import AttrDict
 from fastapi.testclient import TestClient

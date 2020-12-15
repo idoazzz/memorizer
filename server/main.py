@@ -80,4 +80,3 @@ async def get_closest(word: str = ""):
     return {
         "word": closest_word.word,
     }
-
