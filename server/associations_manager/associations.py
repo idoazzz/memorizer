@@ -91,11 +91,6 @@ async def fetch_associations(word, limit):
     return WordAssociations(word, associations, limit)
 
 
-def calculate_associations_grade(associations):
-    """Calculate a grade for all given associations."""
-    return sum([word.grade for word in associations])
-
-
 async def get_associations(words, limit):
     """Search associations asynchronously.
     

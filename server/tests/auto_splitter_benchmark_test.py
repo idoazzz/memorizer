@@ -6,7 +6,6 @@ from server.associations_manager.auto_splitter import \
 
 SUCCESS_RATE = 0.7
 
-# TODO: Add words.
 words = {
     "production": ["pro", "duction"],
     "adventure": ["adven", "ture"],
@@ -30,11 +29,17 @@ words = {
     "exemption": ["exem", "ption"],
     "subtle": ["sub", "tle"],
     "indictment": ["indict", "ment"],
+    "inversion": ["in", "version"],
+    "genocide": ["geno", "cide"],
+    "renovate": ["reno", "vate"],
+    "headquarters": ["head", "quarters"],
+    "allegiance": ["alle", "giance"],
+    "withdrawing": ["with", "drawing"],
 }
 
 
 @pytest.mark.asyncio
-async def test_something():
+async def test_benchmark():
     """Test something."""
     differences = []
     for word, expected_result in words.items():
