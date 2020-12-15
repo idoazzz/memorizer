@@ -4,6 +4,7 @@ import requests_async as requests
 
 API_BASE_URL = "https://api.datamuse.com/words"
 
+
 async def get_soundlike_words(word, metadata_flags="fd"):
     """Request soundlike words.
     
@@ -14,16 +15,20 @@ async def get_soundlike_words(word, metadata_flags="fd"):
     """
     response = await requests.get(f"{API_BASE_URL}", params={
         "sl": word,
-        "md": metadata_flags 
-    })     
-    return [fetched_word for fetched_word in 
+        "md": metadata_flags
+    })
+    return [fetched_word for fetched_word in
             list(map(AttrDict, response.json()))
             if fetched_word.word.isalpha() and len(fetched_word.word) > 1]
 
-async def get_closest_word(word, definitions=True):
+
+async def get_closest_word(word):
     """Request closest soundlike word definition."""
     words = await get_soundlike_words(word)
+    if len(words) == 0:
+        return None
     return words[0]
+
 
 def extract_frequency(frequency):
     """Extract nemeric frequency from Datamuse metadata format."""
