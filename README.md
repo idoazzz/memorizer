@@ -1,5 +1,4 @@
 # **Memorizer**
-`Based on Datamuse api `<br>
 Help people that struggle to 
 remember new english words, based on associative memory method. <br>
 There are a lot of methods, tricks and ways to learn new english words. 
