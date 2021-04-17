@@ -6,9 +6,11 @@ There are a lot of methods, tricks and ways to learn new english words.
 <br>Memorizer takes your new word  and suggest you similar soundlike words that are **known** to you.
 <br>Now, you have only one job. Bound the words that Memorizer suggested you, and the new associative soundlike words.
 <br>
+<br><br>
+
+<br><br>
 <br>
 ### Example
-`You can specify if auto-split should perform, or you will split your word to parts alone.`
 * **SEARCH** your target word. 
     * `bargain` 
 * **PICK** the most associative words to each part of your word. 
