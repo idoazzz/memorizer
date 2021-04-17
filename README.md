@@ -6,15 +6,15 @@ There are a lot of methods, tricks and ways to learn new english words.
 <br>Now, you have only one job. Bound the words that Memorizer suggested you, and the new associative soundlike words.
 <br>
 <br><br>
-
+![memorizer](https://user-images.githubusercontent.com/49838106/115120773-e08b7700-9fb7-11eb-8361-39d8a688116d.png)
 <br><br>
 <br>
 ### Example
-* **SEARCH** your target word. 
+* **Search** your target word. 
     * `bargain` 
-* **PICK** the most associative words to each part of your word. 
+* **Pick** the most associative words to each part of your word. 
     * `bar game`.
-* **BOUND** your association to the new word! We know by the displayed definitions that bargain is negotiation of terms -
+* **Bound** your association to the new word! We know by the displayed definitions that bargain is negotiation of terms -
     * `Every time you will negotiate you have to start with bar game. Without it you will lose!`
 
 Now, we will remember what is bargain! (hopefully)
